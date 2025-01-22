@@ -1,0 +1,55 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using POC_PayMob.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using POC_PayMob.Models;
+namespace POC_PayMob.API {
+
+    [ApiController]
+    [Route("api/[controller]")]
+    public class PaymentController : ControllerBase {
+        private readonly PaymobService _paymobService;
+
+        public PaymentController(PaymobService paymobService)
+        {
+            _paymobService = paymobService;
+        }
+
+
+        [HttpPost("create-payment")]
+        public async Task<IActionResult> CreatePayment([FromBody] PaymentRequest request)
+        {
+            var paymentToken = await _paymobService.GetPaymentTokenAsync(request.Amount, request.Currency, request.OrderId);
+            return Ok(new { PaymentToken = paymentToken });
+        }
+       
+        [HttpPost("payment-callback")]
+        public IActionResult PaymentCallback([FromBody] object response)
+        {
+
+            var result = response;
+            // Handle the payment response
+      
+
+            return Ok();
+        }
+
+        [HttpGet("GetName")]
+        public string GetName()
+        {
+            return "Hi From NgRok";
+        }
+    }
+    public class PaymentCallbackResponse {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        // Other fields as per Paymob's documentation
+    }
+
+    public class PaymentRequest {
+        public decimal Amount { get; set; }
+        public string? Currency { get; set; }
+        public int OrderId { get; set; }
+    }
+}
