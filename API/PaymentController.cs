@@ -4,6 +4,7 @@ using POC_PayMob.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using POC_PayMob.Models;
+using Newtonsoft.Json;
 namespace POC_PayMob.API {
 
     [ApiController]
@@ -27,11 +28,8 @@ namespace POC_PayMob.API {
         [HttpPost("payment-callback")]
         public IActionResult PaymentCallback([FromBody] object response)
         {
-
-            var result = response;
             // Handle the payment response
-      
-
+            var newResult = JsonConvert.DeserializeObject(response.ToString());
             return Ok();
         }
 
