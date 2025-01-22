@@ -57,7 +57,7 @@ namespace POC_PayMob.Services {
                     floor = "4",
                     apartment = "8"
                 },
-                extra_data = new            //this to adding an extra data to the payment 
+                extra= new            //this to adding an extra data to the payment 
                 {
                     custom_field_1 = "value1",
                     custom_field_2 = "value2"
