@@ -37,9 +37,9 @@ namespace POC_PayMob.API {
             // Handle the payment response
             object? newResult = JsonConvert.DeserializeObject(response.ToString());
 
-            PayMobResponseDto newResult2 = JsonConvert.DeserializeObject<PayMobResponseDto>(response.ToString());
+            PayMobResponseDto createdOrder = JsonConvert.DeserializeObject<PayMobResponseDto>(response.ToString());
 
-            //       PayMobResponseDto? obj=JObject.Parse(newResult.ToString()).ToObject<PayMobResponseDto?>();
+
             return Ok();
         }
 
@@ -49,7 +49,16 @@ namespace POC_PayMob.API {
             return "Hi From NgRok";
         }
 
-     
+        [HttpGet("GetToken")]
+        public async Task<string> GetAuthToken()
+        {
+            return await _paymobService.GetAuthTokenAsync();
+        }
+        [HttpPost("GetOrderById")]
+        public async Task<Order> GetOrderByIdAsync([FromQuery] string orderId)
+        {
+            return await _paymobService.GetOrderByIdAsync(orderId);
+        }
     }
     public class PaymentCallbackResponse {
         public bool Success { get; set; }
