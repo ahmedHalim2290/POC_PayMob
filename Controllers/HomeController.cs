@@ -14,7 +14,7 @@ namespace POC_PayMob.Controllers {
 
         public async Task<IActionResult> Index()
         {
-            var paymentToken = await _paymobService.GetPaymentTokenAsync(10, "EGP", 2325234);
+            var paymentToken = await _paymobService.GetPaymentTokenAsync(10, "EGP", 232523234);
             var model = new { PaymentToken = paymentToken };
             return View(model);
 
