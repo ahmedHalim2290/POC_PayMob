@@ -1,3 +1,4 @@
+using POC_PayMob.Filters;
 using POC_PayMob.Services;
 
 namespace POC_PayMob {
@@ -9,6 +10,10 @@ namespace POC_PayMob {
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient<PaymobService>();
+            // Register the HMAC filter
+            builder.Services.AddScoped<HmacValidationFilter>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -5,10 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using POC_PayMob.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using POC_PayMob.Filters;
 namespace POC_PayMob.API {
 
     [ApiController]
     [Route("api/[controller]")]
+
     public class PaymentController : ControllerBase {
         private readonly PaymobService _paymobService;
 
@@ -24,12 +29,17 @@ namespace POC_PayMob.API {
             var paymentToken = await _paymobService.GetPaymentTokenAsync(request.Amount, request.Currency, request.OrderId);
             return Ok(new { PaymentToken = paymentToken });
         }
-       
+
         [HttpPost("payment-callback")]
+        [ServiceFilter(typeof(HmacValidationFilter))] // Apply the HMAC filter
         public IActionResult PaymentCallback([FromBody] object response)
         {
             // Handle the payment response
-            var newResult = JsonConvert.DeserializeObject(response.ToString());
+            object? newResult = JsonConvert.DeserializeObject(response.ToString());
+
+            PayMobResponseDto newResult2 = JsonConvert.DeserializeObject<PayMobResponseDto>(response.ToString());
+
+            //       PayMobResponseDto? obj=JObject.Parse(newResult.ToString()).ToObject<PayMobResponseDto?>();
             return Ok();
         }
 
@@ -38,6 +48,8 @@ namespace POC_PayMob.API {
         {
             return "Hi From NgRok";
         }
+
+     
     }
     public class PaymentCallbackResponse {
         public bool Success { get; set; }

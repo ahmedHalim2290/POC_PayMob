@@ -1,244 +1,234 @@
-﻿namespace POC_PayMob.Models
-{
-    #region NestedClasses
-    public class Acquirer
-    {
-        public int batch { get; set; }
-        public string date { get; set; }
-        public string id { get; set; }
-        public string merchantId { get; set; }
-        public string settlementDate { get; set; }
-        public string timeZone { get; set; }
-        public string transactionId { get; set; }
-    }
+﻿//namespace POC_PayMob.Models
+//{
+//    public class PayMobResponseModel {
+//        public string? Type { get; set; }
+//        public Transaction? Obj { get; set; }
+//        public int AcceptFees { get; set; }
+//        public string? IssuerBank { get; set; }
+//        public string? TransactionProcessedCallbackResponses { get; set; }
+//    }
 
-    public class BillingData
-    {
-        public string city { get; set; }
-        public string email { get; set; }
-        public string floor { get; set; }
-        public string state { get; set; }
-        public string street { get; set; }
-        public string country { get; set; }
-        public string building { get; set; }
-        public string apartment { get; set; }
-        public string last_name { get; set; }
-        public string first_name { get; set; }
-        public string postal_code { get; set; }
-        public string phone_number { get; set; }
-        public string extra_description { get; set; }
-    }
+//    public class Transaction {
+//        public int Id { get; set; }
+//        public bool Pending { get; set; }
+//        public int AmountCents { get; set; }
+//        public bool Success { get; set; }
+//        public bool IsAuth { get; set; }
+//        public bool IsCapture { get; set; }
+//        public bool IsStandalonePayment { get; set; }
+//        public bool IsVoided { get; set; }
+//        public bool IsRefunded { get; set; }
+//        public bool Is3Dsecure { get; set; }
+//        public int IntegrationId { get; set; }
+//        public int ProfileId { get; set; }
+//        public bool HasParentTransaction { get; set; }
+//        public Order? Order { get; set; }
+//        public DateTime CreatedAt { get; set; }
+//        public List<object>? TransactionProcessedCallbackResponses { get; set; }
+//        public string? Currency { get; set; }
+//        public SourceData? SourceData { get; set; }
+//        public string? ApiSource { get; set; }
+//        public string? TerminalId { get; set; }
+//        public int MerchantCommission { get; set; }
+//        public object? Installment { get; set; }
+//        public List<object>? DiscountDetails { get; set; }
+//        public bool IsVoid { get; set; }
+//        public bool IsRefund { get; set; }
+//        public Data? Data { get; set; }
+//        public bool IsHidden { get; set; }
+//        public PaymentKeyClaims? PaymentKeyClaims { get; set; }
+//        public bool ErrorOccured { get; set; }
+//        public bool IsLive { get; set; }
+//        public object? OtherEndpointReference { get; set; }
+//        public int RefundedAmountCents { get; set; }
+//        public int SourceId { get; set; }
+//        public bool IsCaptured { get; set; }
+//        public int CapturedAmount { get; set; }
+//        public object? MerchantStaffTag { get; set; }
+//        public DateTime UpdatedAt { get; set; }
+//        public bool IsSettled { get; set; }
+//        public bool BillBalanced { get; set; }
+//        public bool IsBill { get; set; }
+//        public int Owner { get; set; }
+//        public object? ParentTransaction { get; set; }
+//    }
 
-    public class Chargeback
-    {
-        public int amount { get; set; }
-        public string currency { get; set; }
-    }
+//    public class Order {
+//        public int Id { get; set; }
+//        public DateTime CreatedAt { get; set; }
+//        public bool DeliveryNeeded { get; set; }
+//        public Merchant? Merchant { get; set; }
+//        public object? Collector { get; set; }
+//        public int AmountCents { get; set; }
+//        public ShippingData? ShippingData { get; set; }
+//        public string? Currency { get; set; }
+//        public bool IsPaymentLocked { get; set; }
+//        public bool IsReturn { get; set; }
+//        public bool IsCancel { get; set; }
+//        public bool IsReturned { get; set; }
+//        public bool IsCanceled { get; set; }
+//        public object? MerchantOrderId { get; set; }
+//        public object? WalletNotification { get; set; }
+//        public int PaidAmountCents { get; set; }
+//        public bool NotifyUserWithEmail { get; set; }
+//        public List<object>? Items { get; set; }
+//        public string? OrderUrl { get; set; }
+//        public int CommissionFees { get; set; }
+//        public int DeliveryFeesCents { get; set; }
+//        public int DeliveryVatCents { get; set; }
+//        public string? PaymentMethod { get; set; }
+//        public object? MerchantStaffTag { get; set; }
+//        public string? ApiSource { get; set; }
+//        public Dictionary<string, object?>? Data { get; set; }
+//    }
 
-    public class Data
-    {
-        public int gateway_integration_pk { get; set; }
-        public string klass { get; set; }
-        public DateTime created_at { get; set; }
-        public double amount { get; set; }
-        public string currency { get; set; }
-        public MigsOrder migs_order { get; set; }
-        public string merchant { get; set; }
-        public string migs_result { get; set; }
-        public MigsTransaction migs_transaction { get; set; }
-        public string txn_response_code { get; set; }
-        public string acq_response_code { get; set; }
-        public string message { get; set; }
-        public string merchant_txn_ref { get; set; }
-        public string order_info { get; set; }
-        public string receipt_no { get; set; }
-        public string transaction_no { get; set; }
-        public int batch_no { get; set; }
-        public string authorize_id { get; set; }
-        public string card_type { get; set; }
-        public string card_num { get; set; }
-        public string secure_hash { get; set; }
-        public string avs_result_code { get; set; }
-        public string avs_acq_response_code { get; set; }
-        public double captured_amount { get; set; }
-        public double authorised_amount { get; set; }
-        public double refunded_amount { get; set; }
-        public string acs_eci { get; set; }
-    }
+//    public class Merchant {
+//        public int Id { get; set; }
+//        public DateTime CreatedAt { get; set; }
+//        public List<string>? Phones { get; set; }
+//        public List<string>? CompanyEmails { get; set; }
+//        public string? CompanyName { get; set; }
+//        public string? State { get; set; }
+//        public string? Country { get; set; }
+//        public string? City { get; set; }
+//        public string? PostalCode { get; set; }
+//        public string? Street { get; set; }
+//    }
 
-    public class Extra
-    {
-    }
+//    public class ShippingData {
+//        public int Id { get; set; }
+//        public string? FirstName { get; set; }
+//        public string? LastName { get; set; }
+//        public string? Street { get; set; }
+//        public string? Building { get; set; }
+//        public string? Floor { get; set; }
+//        public string? Apartment { get; set; }
+//        public string? City { get; set; }
+//        public string? State { get; set; }
+//        public string? Country { get; set; }
+//        public string? Email { get; set; }
+//        public string? PhoneNumber { get; set; }
+//        public string? PostalCode { get; set; }
+//        public string? ExtraDescription { get; set; }
+//        public string? ShippingMethod { get; set; }
+//        public int OrderId { get; set; }
+//        public int Order { get; set; }
+//    }
 
-    public class Merchant
-    {
-        public int id { get; set; }
-        public DateTime created_at { get; set; }
-        public List<string> phones { get; set; }
-        public List<string> company_emails { get; set; }
-        public string company_name { get; set; }
-        public string state { get; set; }
-        public string country { get; set; }
-        public string city { get; set; }
-        public string postal_code { get; set; }
-        public string street { get; set; }
-    }
+//    public class SourceData {
+//        public string? Pan { get; set; }
+//        public string? Type { get; set; }
+//        public object? Tenure { get; set; }
+//        public string? SubType { get; set; }
+//    }
 
-    public class MigsOrder
-    {
-        public bool acceptPartialAmount { get; set; }
-        public double amount { get; set; }
-        public string authenticationStatus { get; set; }
-        public Chargeback chargeback { get; set; }
-        public DateTime creationTime { get; set; }
-        public string currency { get; set; }
-        public string description { get; set; }
-        public string id { get; set; }
-        public DateTime lastUpdatedTime { get; set; }
-        public double merchantAmount { get; set; }
-        public string merchantCategoryCode { get; set; }
-        public string merchantCurrency { get; set; }
-        public string status { get; set; }
-        public double totalAuthorizedAmount { get; set; }
-        public double totalCapturedAmount { get; set; }
-        public double totalRefundedAmount { get; set; }
-    }
+//    public class Data {
+//        public int GatewayIntegrationPk { get; set; }
+//        public string? Klass { get; set; }
+//        public DateTime CreatedAt { get; set; }
+//        public double Amount { get; set; }
+//        public string? Currency { get; set; }
+//        public MigsOrder? MigsOrder { get; set; }
+//        public string? Merchant { get; set; }
+//        public string? MigsResult { get; set; }
+//        public MigsTransaction? MigsTransaction { get; set; }
+//        public string? TxnResponseCode { get; set; }
+//        public string? AcqResponseCode { get; set; }
+//        public string? Message { get; set; }
+//        public string? MerchantTxnRef { get; set; }
+//        public string? OrderInfo { get; set; }
+//        public string? ReceiptNo { get; set; }
+//        public string? TransactionNo { get; set; }
+//        public int BatchNo { get; set; }
+//        public string? AuthorizeId { get; set; }
+//        public string? CardType { get; set; }
+//        public string? CardNum { get; set; }
+//        public string? SecureHash { get; set; }
+//        public string? AvsResultCode { get; set; }
+//        public string? AvsAcqResponseCode { get; set; }
+//        public double CapturedAmount { get; set; }
+//        public double AuthorisedAmount { get; set; }
+//        public double RefundedAmount { get; set; }
+//        public string? AcsEci { get; set; }
+//    }
 
-    public class MigsTransaction
-    {
-        public Acquirer acquirer { get; set; }
-        public double amount { get; set; }
-        public string authenticationStatus { get; set; }
-        public string authorizationCode { get; set; }
-        public string currency { get; set; }
-        public string id { get; set; }
-        public string receipt { get; set; }
-        public string source { get; set; }
-        public string stan { get; set; }
-        public string terminal { get; set; }
-        public string type { get; set; }
-    }
+//    public class MigsOrder {
+//        public bool AcceptPartialAmount { get; set; }
+//        public double Amount { get; set; }
+//        public string? AuthenticationStatus { get; set; }
+//        public Chargeback? Chargeback { get; set; }
+//        public DateTime CreationTime { get; set; }
+//        public string? Currency { get; set; }
+//        public string? Description { get; set; }
+//        public string? Id { get; set; }
+//        public DateTime LastUpdatedTime { get; set; }
+//        public double MerchantAmount { get; set; }
+//        public string? MerchantCategoryCode { get; set; }
+//        public string? MerchantCurrency { get; set; }
+//        public string? Status { get; set; }
+//        public double TotalAuthorizedAmount { get; set; }
+//        public double TotalCapturedAmount { get; set; }
+//        public double TotalRefundedAmount { get; set; }
+//    }
 
-    public class Order
-    {
-        public int id { get; set; }
-        public DateTime created_at { get; set; }
-        public bool delivery_needed { get; set; }
-        public Merchant merchant { get; set; }
-        public object collector { get; set; }
-        public int amount_cents { get; set; }
-        public ShippingData shipping_data { get; set; }
-        public string currency { get; set; }
-        public bool is_payment_locked { get; set; }
-        public bool is_return { get; set; }
-        public bool is_cancel { get; set; }
-        public bool is_returned { get; set; }
-        public bool is_canceled { get; set; }
-        public object merchant_order_id { get; set; }
-        public object wallet_notification { get; set; }
-        public int paid_amount_cents { get; set; }
-        public bool notify_user_with_email { get; set; }
-        public List<object> items { get; set; }
-        public string order_url { get; set; }
-        public int commission_fees { get; set; }
-        public int delivery_fees_cents { get; set; }
-        public int delivery_vat_cents { get; set; }
-        public string payment_method { get; set; }
-        public object merchant_staff_tag { get; set; }
-        public string api_source { get; set; }
-        public Data data { get; set; }
-    }
+//    public class Chargeback {
+//        public int Amount { get; set; }
+//        public string? Currency { get; set; }
+//    }
 
-    public class PaymentKeyClaims
-    {
-        public Extra extra { get; set; }
-        public int user_id { get; set; }
-        public string currency { get; set; }
-        public int order_id { get; set; }
-        public int amount_cents { get; set; }
-        public BillingData billing_data { get; set; }
-        public string redirect_url { get; set; }
-        public int integration_id { get; set; }
-        public bool lock_order_when_paid { get; set; }
-        public string next_payment_intention { get; set; }
-        public bool single_payment_attempt { get; set; }
-    }
-    public class ShippingData
-    {
-        public int id { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string street { get; set; }
-        public string building { get; set; }
-        public string floor { get; set; }
-        public string apartment { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string country { get; set; }
-        public string email { get; set; }
-        public string phone_number { get; set; }
-        public string postal_code { get; set; }
-        public string extra_description { get; set; }
-        public string shipping_method { get; set; }
-        public int order_id { get; set; }
-        public int order { get; set; }
-    }
+//    public class MigsTransaction {
+//        public Acquirer? Acquirer { get; set; }
+//        public double Amount { get; set; }
+//        public string? AuthenticationStatus { get; set; }
+//        public string? AuthorizationCode { get; set; }
+//        public string? Currency { get; set; }
+//        public string? Id { get; set; }
+//        public string? Receipt { get; set; }
+//        public string? Source { get; set; }
+//        public string? Stan { get; set; }
+//        public string? Terminal { get; set; }
+//        public string? Type { get; set; }
+//    }
 
-    public class SourceData
-    {
-        public string pan { get; set; }
-        public string type { get; set; }
-        public object tenure { get; set; }
-        public string sub_type { get; set; }
-    }
-    #endregion
-    public class PayMobResponseModel
-    {
-        public int id { get; set; }
-        public bool pending { get; set; }
-        public int amount_cents { get; set; }
-        public bool success { get; set; }
-        public bool is_auth { get; set; }
-        public bool is_capture { get; set; }
-        public bool is_standalone_payment { get; set; }
-        public bool is_voided { get; set; }
-        public bool is_refunded { get; set; }
-        public bool is_3d_secure { get; set; }
-        public int integration_id { get; set; }
-        public int profile_id { get; set; }
-        public bool has_parent_transaction { get; set; }
-        public Order order { get; set; }
-        public DateTime created_at { get; set; }
-        public List<object> transaction_processed_callback_responses { get; set; }
-        public string currency { get; set; }
-        public SourceData source_data { get; set; }
-        public string api_source { get; set; }
-        public object terminal_id { get; set; }
-        public int merchant_commission { get; set; }
-        public object installment { get; set; }
-        public List<object> discount_details { get; set; }
-        public bool is_void { get; set; }
-        public bool is_refund { get; set; }
-        public Data data { get; set; }
-        public bool is_hidden { get; set; }
-        public PaymentKeyClaims payment_key_claims { get; set; }
-        public bool error_occured { get; set; }
-        public bool is_live { get; set; }
-        public object other_endpoint_reference { get; set; }
-        public int refunded_amount_cents { get; set; }
-        public int source_id { get; set; }
-        public bool is_captured { get; set; }
-        public int captured_amount { get; set; }
-        public object merchant_staff_tag { get; set; }
-        public DateTime updated_at { get; set; }
-        public bool is_settled { get; set; }
-        public bool bill_balanced { get; set; }
-        public bool is_bill { get; set; }
-        public int owner { get; set; }
-        public object parent_transaction { get; set; }
-    }
+//    public class Acquirer {
+//        public int Batch { get; set; }
+//        public string? Date { get; set; }
+//        public string? Id { get; set; }
+//        public string? MerchantId { get; set; }
+//        public DateTime SettlementDate { get; set; }
+//        public string? TimeZone { get; set; }
+//        public string? TransactionId { get; set; }
+//    }
+
+//    public class PaymentKeyClaims {
+//        public int Exp { get; set; }
+//        public Dictionary<string, string?>? Extra { get; set; }
+//        public string? PmkIp { get; set; }
+//        public int UserId { get; set; }
+//        public string? Currency { get; set; }
+//        public int OrderId { get; set; }
+//        public int AmountCents { get; set; }
+//        public BillingData? BillingData { get; set; }
+//        public int IntegrationId { get; set; }
+//        public bool LockOrderWhenPaid { get; set; }
+//        public bool SinglePaymentAttempt { get; set; }
+//    }
+
+//    public class BillingData {
+//        public string? City { get; set; }
+//        public string? Email { get; set; }
+//        public string? Floor { get; set; }
+//        public string? State { get; set; }
+//        public string? Street { get; set; }
+//        public string? Country { get; set; }
+//        public string? Building { get; set; }
+//        public string? Apartment { get; set; }
+//        public string? LastName { get; set; }
+//        public string? FirstName { get; set; }
+//        public string? PostalCode { get; set; }
+//        public string? PhoneNumber { get; set; }
+//        public string? ExtraDescription { get; set; }
+//    }
 
 
-
-
-}
+//}
