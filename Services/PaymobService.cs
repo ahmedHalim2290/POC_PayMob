@@ -27,7 +27,7 @@ namespace POC_PayMob.Services {
                 auth_token = authToken,
                 amount_cents = amount * 100, // Paymob expects amount in cents
                 currency,
-                order_id = orderId,
+             //   merchant_order_id = orderId,
                 delivery_needed = "false",
                 items = new object[] { }
             };

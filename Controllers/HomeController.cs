@@ -23,7 +23,7 @@ namespace POC_PayMob.Controllers {
             return View(model);
 
         }
-        [ServiceFilter(typeof(HmacValidationFilter))] // Apply the HMAC filter
+       // [ServiceFilter(typeof(HmacValidationFilter))] // Apply the HMAC filter
         public async Task<IActionResult> Thank()
         {
 
