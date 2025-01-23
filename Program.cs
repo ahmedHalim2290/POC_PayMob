@@ -1,3 +1,4 @@
+using POC_PayMob.Binders;
 using POC_PayMob.Filters;
 using POC_PayMob.Services;
 
@@ -7,7 +8,7 @@ namespace POC_PayMob {
         {
             var builder = WebApplication.CreateBuilder(args);
             // Add CORS services
-    /*        builder.Services.AddCors(options =>
+            builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin", policy =>
                 {
@@ -16,16 +17,21 @@ namespace POC_PayMob {
                           .AllowAnyMethod()//"GET", "POST", "PUT", "DELETE"
                           .AllowCredentials();// to support credentials (e.g., cookies, authorization headers)
 
-                    /* // To Handle the preflight request (HTTP OPTIONS) which sent by Browsers 
-                     policy.WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS"); 
+                     // To Handle the preflight request (HTTP OPTIONS) which sent by Browsers 
+                    // policy.WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS"); 
                 });
-            });*/
+            });
           
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient<PaymobService>();
             // Register the HMAC filter
             builder.Services.AddScoped<HmacValidationFilter>();
+            // Register the CallBackTransactionModel Binder Provider
+            builder.Services.AddControllers(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new CallBackTransactionModelBinderProvider());
+            });
 
 
             var app = builder.Build();

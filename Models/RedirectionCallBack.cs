@@ -1,73 +1,113 @@
-﻿//using static System.Runtime.InteropServices.JavaScript.JSType;
-//using System;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+using System;
+using Newtonsoft.Json;
 
-//namespace POC_PayMob.Models {
-//    public class RedirectionCallBack {
-//  int      id
-//bool pending
-//int amount_cents
+namespace POC_PayMob.Models {
+    public class CallBackTransaction {
+        [JsonProperty("id")]
+        public string Id { get; set; }
 
-//bool success
+        [JsonProperty("pending")]
+        public string Pending { get; set; }
 
-//bool is_auth
+        [JsonProperty("amount_cents")]
+        public string AmountCents { get; set; }
 
-//bool is_capture
+        [JsonProperty("success")]
+        public string Success { get; set; }
 
-//bool is_standalone_payment
+        [JsonProperty("is_auth")]
+        public string IsAuth { get; set; }
 
-//bool is_voided
+        [JsonProperty("is_capture")]
+        public string IsCapture { get; set; }
 
-//bool is_refunded
+        [JsonProperty("is_standalone_payment")]
+        public string IsStandalonePayment { get; set; }
 
-//bool is_3d_secure
+        [JsonProperty("is_voided")]
+        public string IsVoided { get; set; }
 
-//int integration_id
+        [JsonProperty("is_refunded")]
+        public string IsRefunded { get; set; }
 
-//int profile_id
+        [JsonProperty("is_3d_secure")]
+        public string Is3DSecure { get; set; }
 
-//bool has_parent_transaction
+        [JsonProperty("integration_id")]
+        public string IntegrationId { get; set; }
 
-//int order
+        [JsonProperty("profile_id")]
+        public string ProfileId { get; set; }
 
-//string created_at
+        [JsonProperty("has_parent_transaction")]
+        public string HasParentTransaction { get; set; }
 
-//string currency
+        [JsonProperty("order")]
+        public string Order { get; set; }
 
-//int merchant_commission
+        [JsonProperty("created_at")]
+        public DateTime CreatedAt { get; set; }
 
-//object[] discount_details
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
 
-//bool is_void
+        [JsonProperty("merchant_commission")]
+        public string MerchantCommission { get; set; }
 
-//bool is_refund
+        [JsonProperty("discount_details")]
+        public string DiscountDetails { get; set; }
 
-//bool error_occured
+        [JsonProperty("is_void")]
+        public string IsVoid { get; set; }
 
-//int refunded_amount_cents
+        [JsonProperty("is_refund")]
+        public string IsRefund { get; set; }
 
-//int captured_amount
+        [JsonProperty("error_occured")]
+        public string ErrorOccured { get; set; }
 
-//string updated_at
+        [JsonProperty("refunded_amount_cents")]
+        public string RefundedAmountCents { get; set; }
 
-//bool is_settled
+        [JsonProperty("captured_amount")]
+        public string CapturedAmount { get; set; }
 
-//bool bill_balanced
+        [JsonProperty("updated_at")]
+        public DateTime UpdatedAt { get; set; }
 
-//bool is_bill
+        [JsonProperty("is_settled")]
+        public string IsSettled { get; set; }
 
-//int owner
+        [JsonProperty("bill_balanced")]
+        public string BillBalanced { get; set; }
 
-//data.message
+        [JsonProperty("is_bill")]
+        public string IsBill { get; set; }
 
-//source_data.type
+        [JsonProperty("owner")]
+        public string Owner { get; set; }
 
-//stringsource_data.pan
+        [JsonProperty("data.message")]
+        public string DataMessage { get; set; }
 
-//string source_data.sub_type
+        [JsonProperty("source_data.type")]
+        public string SourceDataType { get; set; }
 
-//int txn_response_code
+        [JsonProperty("source_data.pan")]
+        public string SourceDataPan { get; set; }
 
-//string hmac
+        [JsonProperty("source_data.sub_type")]
+        public string SourceDataSubType { get; set; }
 
-//    }
-//}
+        [JsonProperty("acq_response_code")]
+        public string AcqResponseCode { get; set; }
+
+        [JsonProperty("txn_response_code")]
+        public string TxnResponseCode { get; set; }
+
+        [JsonProperty("hmac")]
+        public string Hmac { get; set; }
+    }
+}
+
