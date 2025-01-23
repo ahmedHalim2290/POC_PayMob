@@ -64,7 +64,7 @@
         public Order Order { get; set; }
 
         [JsonProperty("created_at")]
-        public DateTime CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
 
         [JsonProperty("transaction_processed_callback_responses")]
         public List<object> TransactionProcessedCallbackResponses { get; set; }
@@ -130,7 +130,7 @@
         public object MerchantStaffTag { get; set; }
 
         [JsonProperty("updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        public string? UpdatedAt { get; set; }
 
         [JsonProperty("is_settled")]
         public bool IsSettled { get; set; }
@@ -153,7 +153,7 @@
         public int Id { get; set; }
 
         [JsonProperty("created_at")]
-        public DateTime CreatedAt { get; set; }
+        public string? CreatedAt { get; set; }
 
         [JsonProperty("delivery_needed")]
         public bool DeliveryNeeded { get; set; }
@@ -233,7 +233,7 @@
         public int Id { get; set; }
 
         [JsonProperty("created_at")]
-        public DateTime CreatedAt { get; set; }
+        public string? CreatedAt { get; set; }
 
         [JsonProperty("phones")]
         public List<string> Phones { get; set; }
@@ -335,7 +335,7 @@
         public string Klass { get; set; }
 
         [JsonProperty("created_at")]
-        public DateTime CreatedAt { get; set; }
+        public string? CreatedAt { get; set; }
 
         [JsonProperty("amount")]
         public double Amount { get; set; }
@@ -424,7 +424,7 @@
         public Chargeback Chargeback { get; set; }
 
         [JsonProperty("creationTime")]
-        public DateTime CreationTime { get; set; }
+        public string? CreationTime { get; set; }
 
         [JsonProperty("currency")]
         public string Currency { get; set; }
@@ -436,7 +436,7 @@
         public string Id { get; set; }
 
         [JsonProperty("lastUpdatedTime")]
-        public DateTime LastUpdatedTime { get; set; }
+        public string? LastUpdatedTime { get; set; }
 
         [JsonProperty("merchantAmount")]
         public double MerchantAmount { get; set; }
@@ -517,7 +517,7 @@
         public string MerchantId { get; set; }
 
         [JsonProperty("settlementDate")]
-        public DateTime SettlementDate { get; set; }
+        public string? SettlementDate { get; set; }
 
         [JsonProperty("timeZone")]
         public string TimeZone { get; set; }

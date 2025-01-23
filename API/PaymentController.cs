@@ -9,11 +9,12 @@ using Newtonsoft.Json.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using POC_PayMob.Filters;
+using Microsoft.AspNetCore.Cors;
 namespace POC_PayMob.API {
 
     [ApiController]
     [Route("api/[controller]")]
-
+   // [EnableCors("AllowSpecificOrigin")] // Apply CORS policy to this controller
     public class PaymentController : ControllerBase {
         private readonly PaymobService _paymobService;
 
@@ -40,11 +41,11 @@ namespace POC_PayMob.API {
             PayMobResponseDto newResult2 = JsonConvert.DeserializeObject<PayMobResponseDto>(response.ToString());
 
             //       PayMobResponseDto? obj=JObject.Parse(newResult.ToString()).ToObject<PayMobResponseDto?>();
-            return Ok();
+            return StatusCode(200, new {Message="PaymentAuthorizedSuccessfully" });
         }
 
-        [HttpGet("GetName")]
-        public string GetName()
+        [HttpGet("PaymentCallback")]
+        public string PaymentCallback()
         {
             return "Hi From NgRok";
         }
