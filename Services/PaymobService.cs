@@ -2,6 +2,7 @@
 
 using System.Text;
 using Newtonsoft.Json;
+using POC_PayMob.Models;
 
 
 namespace POC_PayMob.Services {
@@ -13,7 +14,7 @@ namespace POC_PayMob.Services {
         public PaymobService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-          
+
         }
 
         public async Task<string> GetPaymentTokenAsync(decimal amount, string currency, int orderId)
@@ -37,7 +38,7 @@ namespace POC_PayMob.Services {
             var paymentTokenRequest = new
             {
                 auth_token = authToken,
-                integration_id = 4930839 ,
+                integration_id = 4930839,
                 order_id = orderIdResponse,
                 currency,
 
@@ -45,7 +46,7 @@ namespace POC_PayMob.Services {
                 expiration = 3600,
                 billing_data = new
                 {
-                    
+
                     first_name = "John",
                     last_name = "Doe",
                     email = "john.doe@example.com",
@@ -57,7 +58,7 @@ namespace POC_PayMob.Services {
                     floor = "4",
                     apartment = "8"
                 },
-                extra= new            //this to adding an extra data to the payment 
+                extra = new            //this to adding an extra data to the payment 
                 {
                     custom_field_1 = "value1",
                     custom_field_2 = "value2"
@@ -68,7 +69,7 @@ namespace POC_PayMob.Services {
             return JsonConvert.DeserializeObject<dynamic>(paymentTokenResponse).token;
         }
 
-        private async Task<string> GetAuthTokenAsync()
+        public async Task<string> GetAuthTokenAsync()
         {
             var authRequest = new
             {
@@ -85,6 +86,21 @@ namespace POC_PayMob.Services {
             var response = await _httpClient.PostAsync(url, content);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<Order> GetOrderByIdAsync(string orderId)
+        {
+            var authToken = await GetAuthTokenAsync();
+
+            var order = new
+            {
+
+                auth_token = authToken,
+                order_id = orderId
+            };
+
+            var orderResponse = await PostAsync("https://accept.paymob.com/api/ecommerce/orders/transaction_inquiry", order);
+            return JsonConvert.DeserializeObject<Order>(orderResponse);
         }
     }
 
