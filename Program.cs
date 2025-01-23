@@ -8,19 +8,19 @@ namespace POC_PayMob {
         {
             var builder = WebApplication.CreateBuilder(args);
             // Add CORS services
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowSpecificOrigin", policy =>
-                {
-                    policy.WithOrigins("https://example.com", "https://anotherexample.com") // Replace with your allowed origin(s)
-                          .AllowAnyHeader() //"Content-Type", "Authorization"
-                          .AllowAnyMethod()//"GET", "POST", "PUT", "DELETE"
-                          .AllowCredentials();// to support credentials (e.g., cookies, authorization headers)
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowSpecificOrigin", policy =>
+            //    {
+            //        policy.WithOrigins("https://example.com", "https://anotherexample.com") // Replace with your allowed origin(s)
+            //              .AllowAnyHeader() //"Content-Type", "Authorization"
+            //              .AllowAnyMethod()//"GET", "POST", "PUT", "DELETE"
+            //              .AllowCredentials();// to support credentials (e.g., cookies, authorization headers)
 
-                     // To Handle the preflight request (HTTP OPTIONS) which sent by Browsers 
-                    // policy.WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS"); 
-                });
-            });
+            //         // To Handle the preflight request (HTTP OPTIONS) which sent by Browsers 
+            //        // policy.WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS"); 
+            //    });
+            //});
           
             // Add services to the container.
             builder.Services.AddControllersWithViews();
