@@ -10,8 +10,11 @@
     ViewData["Title"] = "Transaction Details";
 }
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-@{if(Model.Success=="true"){
-<div class="container">
+@{
+    if (Model.Success == "true")
+    {
+     
+        <div class="container">
     <h2>Thanks for your order</h2>
     <h3>Details</h3>
     <table class="table table-bordered">
@@ -65,13 +68,14 @@
 
     </table>
 </div>
-}
-else
-{
-<div class="container">
-    <h2>Sorry the process failed</h2>
-    <br />
-    <h2> Details :  @Model.DataMessage</h2>
-    </div>
-}
+    }
+    else
+    {
+            <div class="text-center">
+                <h1 class="display-4">Sorry the process failed</h1>
+                <p>
+                    Details :  @Model.DataMessage
+                </p>
+            </div>
+    }
 }
