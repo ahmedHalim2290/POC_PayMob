@@ -14,7 +14,7 @@ namespace POC_PayMob.API {
 
     [ApiController]
     [Route("api/[controller]")]
-   // [EnableCors("AllowSpecificOrigin")] // Apply CORS policy to this controller
+    // [EnableCors("AllowSpecificOrigin")] // Apply CORS policy to this controller
     public class PaymentController : ControllerBase {
         private readonly PaymobService _paymobService;
 
@@ -41,7 +41,7 @@ namespace POC_PayMob.API {
             PayMobResponseDto createdOrder = JsonConvert.DeserializeObject<PayMobResponseDto>(response.ToString());
 
 
-            return StatusCode(200, new {Message="PaymentAuthorizedSuccessfully" });
+            return StatusCode(200, new { Message = "PaymentAuthorizedSuccessfully" });
         }
 
         [HttpGet("PaymentCallback")]
@@ -59,6 +59,12 @@ namespace POC_PayMob.API {
         public async Task<Order> GetOrderByIdAsync([FromQuery] string orderId)
         {
             return await _paymobService.GetOrderByIdAsync(orderId);
+        }
+
+        [HttpPost("CaptureTransaction")]
+        public async Task<dynamic> CaptureTransaction()
+        {
+            return await _paymobService.CaptureTransaction();
         }
     }
     public class PaymentCallbackResponse {
