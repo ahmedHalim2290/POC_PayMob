@@ -32,9 +32,17 @@ namespace POC_PayMob {
             {
                 options.ModelBinderProviders.Insert(0, new CallBackTransactionModelBinderProvider());
             });
-
-
+            // Register IHttpContextAccessor
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             var app = builder.Build();
+            // Use session middleware
+            app.UseSession();
             // Use CORS middleware
             app.UseCors("AllowSpecificOrigin");
             app.Use(async (context, next) =>

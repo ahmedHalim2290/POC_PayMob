@@ -10,14 +10,21 @@
     ViewData["Title"] = "Transaction Details";
 }
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<<<<<<< HEAD
 @{
     if (Model.Success == "true")
     {
      
         <div class="container">
+    <h2>Thanks for your order</h2>
+    <h3>Details</h3>
+=======
+@{if(Model.Success=="true"){
+<div class="container">
     <h1>Thanks for your order your order has been Approved.</h1>
     <br />
     <h4>Order Details: </h4>
+>>>>>>> 2b02af2c308ce2e0efc77b44fc02609f6abca77f
     <table class="table table-bordered">
         <tr>
             <th>ID</th>
@@ -55,23 +62,30 @@
             <th>Source Data Sub Type</th>
             <td>@Model.SourceDataSubType</td>
         </tr>
-        <tr>
-        <th> extra Data
-        </th>
-                    <td>ViewBag["extraData"].ee</td>
-                </tr>
      
 
     </table>
 </div>
+<<<<<<< HEAD
     }
     else
     {
             <div class="text-center">
-    <h2>Sorry the process has been Rejected</h2>
+                <h1 class="display-4">Sorry the process failed</h1>
                 <p>
                     Details :  @Model.DataMessage
                 </p>
             </div>
     }
+=======
+}
+else
+{
+<div class="container">
+    <h2>Sorry the process has been Rejected</h2>
+    <br />
+    <h2> Details :  @Model.DataMessage</h2>
+    </div>
+}
+>>>>>>> 2b02af2c308ce2e0efc77b44fc02609f6abca77f
 }

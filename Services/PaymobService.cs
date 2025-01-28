@@ -8,19 +8,21 @@ using POC_PayMob.Models;
 namespace POC_PayMob.Services {
     public class PaymobService {
         private readonly HttpClient _httpClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         //from pay mob setting
         private readonly string _apiKey = "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TVRBeE9Ea3dNU3dpYm1GdFpTSTZJakUzTXpjek1qQTNNVEV1TlRrek9EQTFJbjAuOGIxbk9XckYzLVNMOGJxS0cwWFYxSldzUnE5ME1ZTmpGaDdWcWxFeUFGR0kyRWxtTmVFLUtyVjVVc2ZVVUVlUkNGbUpNd05MZmx0UlJYb2FaM0dhV1E=";
 
-        public PaymobService(HttpClient httpClient)
+        public PaymobService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
         {
             _httpClient = httpClient;
-
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<string> GetClientSecretAsync()
         {
 
            var payload = new
             {
+               auth=true,
                amount = 10,
                 currency = "EGP",
                 payment_methods = new object[] { 12, "card", 4930839 },
@@ -65,8 +67,16 @@ namespace POC_PayMob.Services {
 
 
             var paymentTokenResponse = await PostSecretAsync("https://accept.paymob.com/v1/intention/", payload);
+            var result = JsonConvert.DeserializeObject<dynamic>(paymentTokenResponse);
+            var extraData= result.extras;
+            var session = _httpContextAccessor.HttpContext.Session;
 
-            return JsonConvert.DeserializeObject<dynamic>(paymentTokenResponse).client_secret;
+            // Serialize the object to JSON
+            string jsonObject = JsonConvert.SerializeObject(extraData);
+
+            // Store the serialized object in session
+            session.SetString("extraData", jsonObject);
+            return result.client_secret;
         }
 
         public async Task<string> GetPaymentTokenAsync(decimal amount, string _currency, int orderId )

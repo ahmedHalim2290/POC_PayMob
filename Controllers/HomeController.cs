@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using POC_PayMob.Binders;
 using POC_PayMob.Filters;
 using POC_PayMob.Models;
@@ -10,10 +11,12 @@ using static System.Net.Mime.MediaTypeNames;
 namespace POC_PayMob.Controllers {
     public class HomeController : Controller {
         private readonly PaymobService _paymobService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HomeController(PaymobService paymobService)
+        public HomeController(PaymobService paymobService, IHttpContextAccessor httpContextAccessor)
         {
             _paymobService = paymobService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -31,6 +34,18 @@ namespace POC_PayMob.Controllers {
         /*public async Task<IActionResult> Thank([ModelBinder(BinderType = typeof(CallBackTransactionModelBinder)CallBackTransaction response)*/
         public async Task<IActionResult> Thank()
         {
+            var session = _httpContextAccessor.HttpContext.Session;
+
+            // Retrieve the serialized object from session
+            string jsonObject = session.GetString("extraData");
+
+            if (!string.IsNullOrEmpty(jsonObject))
+            {
+
+                // Deserialize the object
+                var extraData = JsonConvert.DeserializeObject<dynamic>(jsonObject);
+                ViewBag["extraData"] = extraData;
+            }
             var request = HttpContext.Request;
             var result = new CallBackTransaction
             {
