@@ -20,14 +20,14 @@ namespace POC_PayMob.Services {
         public async Task<string> GetClientSecretAsync()
         {
 
-           var payload = new
+            var payload = new
             {
-               auth=true,
-               amount = 10,
+                auth = true,
+                amount = 10,
                 currency = "EGP",
-                payment_methods = new object[] { 12, "card", 4930839 },
+                payment_methods = new object[] { 12, "card", 4937477 },
                 items = new[]
-        {
+         {
         new
         {
             name = "Item name 1",
@@ -79,7 +79,7 @@ namespace POC_PayMob.Services {
             return result.client_secret;
         }
 
-        public async Task<string> GetPaymentTokenAsync(decimal amount, string _currency, int orderId )
+        public async Task<string> GetPaymentTokenAsync(decimal amount, string _currency, int orderId)
         {
             var authToken = await GetAuthTokenAsync();
 
@@ -88,8 +88,8 @@ namespace POC_PayMob.Services {
 
                 auth_token = authToken,
                 amount_cents = amount * 100, // Paymob expects amount in cents
-                currency=_currency,
-             //   merchant_order_id = orderId,
+                currency = _currency,
+                //   merchant_order_id = orderId,
                 delivery_needed = "false",
                 items = new object[] { }
             };
@@ -100,10 +100,10 @@ namespace POC_PayMob.Services {
             var paymentTokenRequest = new
             {
                 auth_token = authToken,
-                integration_id = 4930839,
-                transaction_type= "auth",
+                integration_id = 4937477, //the auth integration id is: 4937477
+                transaction_type = "auth",
                 order_id = orderIdResponse,
-                currency= _currency,
+                currency = _currency,
 
                 amount_cents = amount * 100,
                 expiration = 3600,
@@ -148,17 +148,23 @@ namespace POC_PayMob.Services {
         {
             var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(url, content);
-            response.EnsureSuccessStatusCode();
+            var responseContent = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                // Log the response content for debugging
+                Console.WriteLine(responseContent);
+                response.EnsureSuccessStatusCode(); // This will throw if the status code is not successful
+            }
             return await response.Content.ReadAsStringAsync();
         }
         private async Task<string> PostSecretAsync(string url, object data)
         {
-           
+
 
             var authToken = "egy_sk_test_549543704060b5d0c3ebae6c98aabbacf464494c2b7d0452a01a36da89dfc4e6";
             var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
             var request = new HttpRequestMessage(HttpMethod.Post, "https://accept.paymob.com/v1/intention/");
-            request.Headers.Add("Authorization", "Token "+authToken);
+            request.Headers.Add("Authorization", "Token " + authToken);
             request.Content = content;
             var response = await _httpClient.SendAsync(request);
             if (!response.IsSuccessStatusCode)
@@ -173,22 +179,27 @@ namespace POC_PayMob.Services {
         }
 
 
-        private  async Task<dynamic> CaptureTransaction(string paymentKey)
+        public async Task<dynamic> CaptureTransaction()
         {
+            //var content = new
+            //{
+            //    source = new { identifier = "AGGREGATOR", subtype = "AGGREGATOR" },
+            //    payment_token = paymentKey
+            //};
+            var authToken = await GetAuthTokenAsync();
             var content = new
             {
-                source = new { identifier = "AGGREGATOR", subtype = "AGGREGATOR" },
-                payment_token = paymentKey
+                transaction_id = 258753933,
+                amount_cents = 10,
+                auth_token = authToken
             };
+
 
 
             var orderResponse = await PostAsync("https://accept.paymobsolutions.com/api/acceptance/capture", content);
             var x = JsonConvert.DeserializeObject<dynamic>(orderResponse);
             return x;
         }
-
-
-
 
         public async Task<Order> GetOrderByIdAsync(string orderId)
         {
