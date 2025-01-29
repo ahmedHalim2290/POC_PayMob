@@ -1,21 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using POC_PayMob.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using POC_PayMob.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using POC_PayMob.Filters;
-using Microsoft.AspNetCore.Cors;
 namespace POC_PayMob.API {
 
     [ApiController]
     [Route("api/[controller]")]
     // [EnableCors("AllowSpecificOrigin")] // Apply CORS policy to this controller
     public class PaymentController : ControllerBase {
+
         private readonly PaymobService _paymobService;
 
         public PaymentController(PaymobService paymobService)
@@ -23,12 +17,11 @@ namespace POC_PayMob.API {
             _paymobService = paymobService;
         }
 
-
-        [HttpPost("create-payment")]
-        public async Task<IActionResult> CreatePayment([FromBody] PaymentRequest request)
+        [HttpPost("auth-transaction")]
+        public async Task<IActionResult> GetClientSecret([FromBody] OrderRequestDto order)
         {
-            var paymentToken = await _paymobService.GetPaymentTokenAsync(request.Amount, request.Currency, request.OrderId);
-            return Ok(new { PaymentToken = paymentToken });
+            var clientSecret = await _paymobService.GetClientSecretAsync(order);
+            return Ok(new { client_secret_key = clientSecret });
         }
 
         [HttpPost("payment-callback")]
@@ -36,46 +29,16 @@ namespace POC_PayMob.API {
         public IActionResult PaymentCallback([FromBody] object response)
         {
             // Handle the payment response
-            object? newResult = JsonConvert.DeserializeObject(response.ToString());
-
             PayMobResponseDto createdOrder = JsonConvert.DeserializeObject<PayMobResponseDto>(response.ToString());
-
+            var extraData = createdOrder.Obj.PaymentKeyClaims.Extra;
 
             return StatusCode(200, new { Message = "PaymentAuthorizedSuccessfully" });
         }
 
-        [HttpGet("PaymentCallback")]
-        public string PaymentCallback()
+        [HttpGet("capture-transaction")]
+        public async Task<dynamic> CaptureTransaction([FromQuery] CaptureRequestDto captureDTo)
         {
-            return "Hi From NgRok";
+            return await _paymobService.CaptureTransactionAsync(captureDTo);
         }
-
-        [HttpGet("GetToken")]
-        public async Task<string> GetAuthToken()
-        {
-            return await _paymobService.GetAuthTokenAsync();
-        }
-        [HttpPost("GetOrderById")]
-        public async Task<Order> GetOrderByIdAsync([FromQuery] string orderId)
-        {
-            return await _paymobService.GetOrderByIdAsync(orderId);
-        }
-
-        [HttpPost("CaptureTransaction")]
-        public async Task<dynamic> CaptureTransaction()
-        {
-            return await _paymobService.CaptureTransaction();
-        }
-    }
-    public class PaymentCallbackResponse {
-        public bool Success { get; set; }
-        public string Message { get; set; }
-        // Other fields as per Paymob's documentation
-    }
-
-    public class PaymentRequest {
-        public decimal Amount { get; set; }
-        public string? Currency { get; set; }
-        public int OrderId { get; set; }
     }
 }

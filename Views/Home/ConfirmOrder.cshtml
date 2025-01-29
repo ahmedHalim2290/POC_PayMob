@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model POC_PayMob.Models.CallBackTransaction
+
+@{
+    ViewData["Title"] = "Transaction Details";
+}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+@{
+    if (Model.Success == "true" && Model.IsAuth == "true" )
+    {
+        <div class="text-center">
+            <h1 class="display-4">PayMob</h1>
+            <p>
+                The Order @Model.Order with amount @((decimal.Parse(Model.AmountCents) / 100)) @Model.Currency  please
+                <a href="@Url.Action("CaptureOrder", "Home", new { TransactionId = Model.Id, AmountCents = Model.AmountCents })">Confirm Order</a>
+                or <a href="@Url.Action("CancelOrder", "Home", new { TransactionId = Model.Id, AmountCents = Model.AmountCents })">Cancel Order</a>.
+            </p>
+        </div>
+
+    }else
+    {
+            <div class="text-center">
+    <h2>Sorry the process has been Rejected</h2>
+                <p>
+                    Details :  @Model.DataMessage
+                </p>
+            </div>
+    }
+}

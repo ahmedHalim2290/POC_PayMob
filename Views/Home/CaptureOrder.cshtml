@@ -1,0 +1,50 @@
+﻿@model POC_PayMob.Models.Response_Transaction
+<div class="text-center">
+    <h1 class="display-4">PayMob</h1>
+    <div class="container">
+        <h1>Thanks for your order your order has been Approved.</h1>
+        <br />
+        <h4>Order Details: </h4>
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <td>@Model.Id</td>
+            </tr>
+
+            <tr>
+                <th>Amount (Cents)</th>
+                <td>@Model.AmountCents</td>
+            </tr>
+            <tr>
+                <th>Success</th>
+                <td>@Model.Success</td>
+            </tr>
+
+
+            <tr>
+                <th>Order</th>
+                <td>@Model.Order</td>
+            </tr>
+
+            <tr>
+                <th>Currency</th>
+                <td>@Model.Currency</td>
+            </tr>
+
+
+            <tr>
+                <th>Data Message</th>
+                <td>@Model.Data.Message</td>
+            </tr>
+
+
+            <tr>
+                <th>Source Data Sub Type</th>
+                <td>@Model.SourceData.SubType</td>
+            </tr>
+        </table>
+    </div>
+
+
+</div>
+

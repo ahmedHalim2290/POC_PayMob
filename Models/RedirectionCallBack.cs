@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace POC_PayMob.Models {
     public class CallBackTransaction {

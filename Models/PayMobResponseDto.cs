@@ -8,7 +8,7 @@
         public string Type { get; set; }
 
         [JsonProperty("obj")]
-        public Transaction Obj { get; set; }
+        public Response_Transaction Obj { get; set; }
 
         [JsonProperty("accept_fees")]
         public int AcceptFees { get; set; }
@@ -20,7 +20,7 @@
         public string TransactionProcessedCallbackResponses { get; set; }
     }
 
-    public class Transaction {
+    public class Response_Transaction {
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -61,7 +61,7 @@
         public bool HasParentTransaction { get; set; }
 
         [JsonProperty("order")]
-        public Order Order { get; set; }
+        public Response_OrderDTO Order { get; set; }
 
         [JsonProperty("created_at")]
         public string CreatedAt { get; set; }
@@ -73,7 +73,7 @@
         public string Currency { get; set; }
 
         [JsonProperty("source_data")]
-        public SourceData SourceData { get; set; }
+        public Response_SourceData SourceData { get; set; }
 
         [JsonProperty("api_source")]
         public string ApiSource { get; set; }
@@ -97,13 +97,13 @@
         public bool IsRefund { get; set; }
 
         [JsonProperty("data")]
-        public Data Data { get; set; }
+        public Response_Data Data { get; set; }
 
         [JsonProperty("is_hidden")]
         public bool IsHidden { get; set; }
 
         [JsonProperty("payment_key_claims")]
-        public PaymentKeyClaims PaymentKeyClaims { get; set; }
+        public Response_PaymentKeyClaims PaymentKeyClaims { get; set; }
 
         [JsonProperty("error_occured")]
         public bool ErrorOccured { get; set; }
@@ -148,7 +148,7 @@
         public object ParentTransaction { get; set; }
     }
 
-    public class Order {
+    public class Response_OrderDTO {
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -159,7 +159,7 @@
         public bool DeliveryNeeded { get; set; }
 
         [JsonProperty("merchant")]
-        public Merchant Merchant { get; set; }
+        public Response_Merchant Merchant { get; set; }
 
         [JsonProperty("collector")]
         public object Collector { get; set; }
@@ -168,7 +168,7 @@
         public int AmountCents { get; set; }
 
         [JsonProperty("shipping_data")]
-        public ShippingData ShippingData { get; set; }
+        public Response_ShippingData ShippingData { get; set; }
 
         [JsonProperty("currency")]
         public string Currency { get; set; }
@@ -228,7 +228,7 @@
         public Dictionary<string, object> Data { get; set; }
     }
 
-    public class Merchant {
+    public class Response_Merchant {
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -260,7 +260,7 @@
         public string Street { get; set; }
     }
 
-    public class ShippingData {
+    public class Response_ShippingData {
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -313,7 +313,7 @@
         public int Order { get; set; }
     }
 
-    public class SourceData {
+    public class Response_SourceData {
         [JsonProperty("pan")]
         public string Pan { get; set; }
 
@@ -327,7 +327,7 @@
         public string SubType { get; set; }
     }
 
-    public class Data {
+    public class Response_Data {
         [JsonProperty("gateway_integration_pk")]
         public int GatewayIntegrationPk { get; set; }
 
@@ -344,7 +344,7 @@
         public string Currency { get; set; }
 
         [JsonProperty("migs_order")]
-        public MigsOrder MigsOrder { get; set; }
+        public Response_MigsOrder MigsOrder { get; set; }
 
         [JsonProperty("merchant")]
         public string Merchant { get; set; }
@@ -353,7 +353,7 @@
         public string MigsResult { get; set; }
 
         [JsonProperty("migs_transaction")]
-        public MigsTransaction MigsTransaction { get; set; }
+        public Response_MigsTransaction MigsTransaction { get; set; }
 
         [JsonProperty("txn_response_code")]
         public string TxnResponseCode { get; set; }
@@ -410,7 +410,7 @@
         public string AcsEci { get; set; }
     }
 
-    public class MigsOrder {
+    public class Response_MigsOrder {
         [JsonProperty("acceptPartialAmount")]
         public bool AcceptPartialAmount { get; set; }
 
@@ -421,7 +421,7 @@
         public string AuthenticationStatus { get; set; }
 
         [JsonProperty("chargeback")]
-        public Chargeback Chargeback { get; set; }
+        public Response_Chargeback Chargeback { get; set; }
 
         [JsonProperty("creationTime")]
         public string? CreationTime { get; set; }
@@ -460,7 +460,7 @@
         public double TotalRefundedAmount { get; set; }
     }
 
-    public class Chargeback {
+    public class Response_Chargeback {
         [JsonProperty("amount")]
         public int Amount { get; set; }
 
@@ -468,9 +468,9 @@
         public string Currency { get; set; }
     }
 
-    public class MigsTransaction {
+    public class Response_MigsTransaction {
         [JsonProperty("acquirer")]
-        public Acquirer Acquirer { get; set; }
+        public Response_Acquirer Acquirer { get; set; }
 
         [JsonProperty("amount")]
         public double Amount { get; set; }
@@ -503,7 +503,7 @@
         public string Type { get; set; }
     }
 
-    public class Acquirer {
+    public class Response_Acquirer {
         [JsonProperty("batch")]
         public int Batch { get; set; }
 
@@ -526,7 +526,7 @@
         public string TransactionId { get; set; }
     }
 
-    public class PaymentKeyClaims {
+    public class Response_PaymentKeyClaims {
         [JsonProperty("exp")]
         public int Exp { get; set; }
 
@@ -549,7 +549,7 @@
         public int AmountCents { get; set; }
 
         [JsonProperty("billing_data")]
-        public BillingData BillingData { get; set; }
+        public Response_BillingData BillingData { get; set; }
 
         [JsonProperty("integration_id")]
         public int IntegrationId { get; set; }
@@ -561,7 +561,7 @@
         public bool SinglePaymentAttempt { get; set; }
     }
 
-    public class BillingData {
+    public class Response_BillingData {
         [JsonProperty("city")]
         public string City { get; set; }
 

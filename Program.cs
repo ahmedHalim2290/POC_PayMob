@@ -1,4 +1,3 @@
-using POC_PayMob.Binders;
 using POC_PayMob.Filters;
 using POC_PayMob.Services;
 
@@ -27,11 +26,7 @@ namespace POC_PayMob {
             builder.Services.AddHttpClient<PaymobService>();
             // Register the HMAC filter
             builder.Services.AddScoped<HmacValidationFilter>();
-            // Register the CallBackTransactionModel Binder Provider
-            builder.Services.AddControllers(options =>
-            {
-                options.ModelBinderProviders.Insert(0, new CallBackTransactionModelBinderProvider());
-            });
+   
             // Register IHttpContextAccessor
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSession(options =>
