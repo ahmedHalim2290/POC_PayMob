@@ -3,8 +3,7 @@
 *@
 @{
 }
-
-@model POC_PayMob.Models.CallBackTransaction
+@model POC_PayMob.Models.RedirectionPaymentResponseDto
 
 @{
     ViewData["Title"] = "Transaction Details";
@@ -17,8 +16,8 @@
             <h1 class="display-4">PayMob</h1>
             <p>
                 The Order @Model.Order with amount @((decimal.Parse(Model.AmountCents) / 100)) @Model.Currency  please
-                <a href="@Url.Action("CaptureOrder", "Home", new { TransactionId = Model.Id, AmountCents = Model.AmountCents })">Confirm Order</a>
-                or <a href="@Url.Action("CancelOrder", "Home", new { TransactionId = Model.Id, AmountCents = Model.AmountCents })">Cancel Order</a>.
+                 <a href="@Url.Action("CaptureOrder", "Home", new { TransactionId = Model.Id, AmountCents = Model.AmountCents })">Confirm Order</a>
+                or <a href="@Url.Action("CancelOrder", "Home", new { TransactionId = Model.Id })">Cancel Order</a>.
             </p>
         </div>
 
@@ -32,3 +31,4 @@
             </div>
     }
 }
+

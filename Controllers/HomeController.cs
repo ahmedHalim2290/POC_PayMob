@@ -19,31 +19,32 @@ namespace POC_PayMob.Controllers {
         {
             OrderRequestDto order = new OrderRequestDto()  // request model i should to create the transaction Auth OR standalone
             {
-                amount = 2000,
-                currency = "EGP",
-                items = new List<OrderItem>(){
+            //    SpecialReference = "orderId_7676",
+                Amount = 2000,
+                Currency = "EGP",
+                Items = new List<OrderItem>(){
                     new OrderItem(){
-                        name= "Item name",
-                        amount= 2000,
-                        description= "Item description",
-                         quantity= 1
+                        Name= "Item name",
+                        Amount= 2000,
+                        Description= "Item description",
+                         Quantity= 1
                     }
                 },
-                billing_data = new OrderBillingData
+                BillingData = new BillingData
                 {
-                    apartment = "dumy",
-                    first_name = "ala",
-                    last_name = "zain",
-                    street = "dumy",
-                    building = "dumy",
-                    phone_number = "+92345xxxxxxxx",
-                    city = "dumy",
-                    country = "dumy",
-                    email = "ali@gmail.com",
-                    floor = "dumy",
-                    state = "dumy"
+                    Apartment = "dumy",
+                    FirstName = "ala",
+                    LastName = "zain",
+                    Street = "dumy",
+                    Building = "dumy",
+                    PhoneNumber = "+92345xxxxxxxx",
+                    City = "dumy",
+                    Country = "dumy",
+                    Email = "ali@gmail.com",
+                    Floor = "dumy",
+                    State = "dumy"
                 },
-                extras = new
+                Extras = new
                 {
                     ee = 22
                 }
@@ -58,16 +59,24 @@ namespace POC_PayMob.Controllers {
 
         public async Task<IActionResult> CaptureOrder([FromQuery] CaptureRequestDto captureDTo)
         {
-            var data = await _paymobService.CaptureTransactionAsync(captureDTo);
-            Response_Transaction model = new Response_Transaction();
-            model = JsonConvert.DeserializeObject<Response_Transaction>(data);
+             var data = await _paymobService.CaptureTransactionAsync(captureDTo);
+            TransactionResponseDto model = new TransactionResponseDto();
+            model = JsonConvert.DeserializeObject<TransactionResponseDto>(data.ToString());
             return View(model);
         }
+        public async Task<IActionResult> CancelOrder([FromQuery] VoidRequestDto voidDto)
+        {
+            var data = await _paymobService.VoidTransactionAsync(voidDto);
+            TransactionResponseDto model = new TransactionResponseDto();
+            model = JsonConvert.DeserializeObject<TransactionResponseDto>(data.ToString());
+            return View(model);
+        }
+
 
         public async Task<IActionResult> ConfirmOrder()
         {
             var request = HttpContext.Request;
-            var result = new CallBackTransaction
+            var result = new RedirectionPaymentResponseDto
             {
                 Id = request.Query["id"].ToString(),
                 Pending = request.Query["pending"].ToString(),

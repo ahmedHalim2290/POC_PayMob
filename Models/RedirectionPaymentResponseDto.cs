@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 namespace POC_PayMob.Models {
-    public class CallBackTransaction {
+    public class RedirectionPaymentResponseDto {
         [JsonProperty("id")]
         public string Id { get; set; }
 

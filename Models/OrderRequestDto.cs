@@ -1,46 +1,97 @@
-﻿namespace POC_PayMob.Models {
-    
-    public class OrderItem
-    {
-        public string name { get; set; }
-        public decimal amount { get; set; }
-         public string description { get; set; }
-          public decimal quantity { get; set; }
+﻿using Newtonsoft.Json;
+
+namespace POC_PayMob.Models {
+
+
+    public class OrderItem {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("quantity")]
+        public decimal Quantity { get; set; }
     }
-    public class OrderBillingData
-    {
-       public string apartment { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string street { get; set; }
-        public string building { get; set; }
-        public string phone_number { get; set; }
-        public string country { get; set; }
-        public string city { get; set; }
-        public string email { get; set; }
-        public string floor { get; set; }
-        public string  state { get; set; }
+
+    public class BillingData {
+        [JsonProperty("apartment")]
+        public string Apartment { get; set; }
+
+        [JsonProperty("first_name")]
+        public string FirstName { get; set; }
+
+        [JsonProperty("last_name")]
+        public string LastName { get; set; }
+
+        [JsonProperty("street")]
+        public string Street { get; set; }
+
+        [JsonProperty("building")]
+        public string Building { get; set; }
+
+        [JsonProperty("phone_number")]
+        public string PhoneNumber { get; set; }
+
+        [JsonProperty("country")]
+        public string Country { get; set; }
+
+        [JsonProperty("city")]
+        public string City { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("floor")]
+        public string Floor { get; set; }
+
+        [JsonProperty("state")]
+        public string State { get; set; }
     }
-    public class OrderCustomer
-    {
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string email { get; set; }
-        public object extras { get; set; }
+
+    public class Customer {
+        [JsonProperty("first_name")]
+        public string FirstName { get; set; }
+
+        [JsonProperty("last_name")]
+        public string LastName { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("extras")]
+        public object Extras { get; set; }
     }
+
     public class OrderRequestDto {
-        private static readonly int _AuthPaymentMethodIntegrationID = 4937477;
-        private static readonly int _AuthPaymentMethodNum = 12;
-        private static readonly string _authPaymentMethodType = "card";
-        public object[] payment_methods = new object[] 
-        { _AuthPaymentMethodNum, _authPaymentMethodType, _AuthPaymentMethodIntegrationID };
+      
+        private static readonly int AuthPaymentMethodIntegrationID = 4937477;
+     //   private static readonly int AuthPaymentMethodNum = 12;
+        private static readonly string AuthPaymentMethodType = "card";
 
-          public decimal amount { get; set; }
-          public string  currency { get; set; }
-          public List<OrderItem> items { get; set; }   
-          public OrderBillingData  billing_data { get; set; }
-          public OrderCustomer customer { get; set; }
-          public object extras { get; set; }
+        [JsonProperty("payment_methods")]
+        public object[] PaymentMethods => new object[] { AuthPaymentMethodType, AuthPaymentMethodIntegrationID };
+     //   [JsonProperty("special_reference")]
+      //  public string SpecialReference {  get; set; }
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
 
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        [JsonProperty("items")]
+        public List<OrderItem> Items { get; set; }
+
+        [JsonProperty("billing_data")]
+        public BillingData BillingData { get; set; }
+
+        [JsonProperty("customer")]
+        public Customer Customer { get; set; }
+
+        [JsonProperty("extras")]
+        public object Extras { get; set; }
     }
 }

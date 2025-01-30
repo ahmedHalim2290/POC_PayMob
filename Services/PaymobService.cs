@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: Paymob
 
 using System.Text;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using POC_PayMob.Models;
 
@@ -8,18 +9,28 @@ using POC_PayMob.Models;
 namespace POC_PayMob.Services {
     public class PaymobService {
 
-        private readonly string authToken = "egy_sk_test_549543704060b5d0c3ebae6c98aabbacf464494c2b7d0452a01a36da89dfc4e6";// secret key from dashboard
-        private readonly string PaymentTransactionURL = "https://accept.paymob.com/v1/intention/"; // Auth or Standalone based on integration ID inside order class
-        private readonly string CaptureTransactionURL = " https://accept.paymob.com/api/acceptance/capture";
-
+       
         private readonly HttpClient _httpClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private static dynamic? extraData;
+        private readonly PaymobOptions _options;
 
-        public PaymobService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
+        private string authToken;
+        private string PaymentTransactionURL;
+        private string CaptureTransactionURL;
+        private string VoidTransactionURL;
+
+
+        public PaymobService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor,IOptions<PaymobOptions> options)
         {
+            _options = options.Value;
+        
             _httpClient = httpClient;
             _httpContextAccessor = httpContextAccessor;
+
+            authToken = _options.authToken;
+            PaymentTransactionURL = _options.PaymentTransactionURL;
+            CaptureTransactionURL = _options.CaptureTransactionURL;
+            VoidTransactionURL = _options.VoidTransactionURL;
         }
 
         public async Task<string> GetClientSecretAsync(OrderRequestDto payload)
@@ -30,9 +41,13 @@ namespace POC_PayMob.Services {
             return result.client_secret;
         }
 
-        public async Task<dynamic> CaptureTransactionAsync(CaptureRequestDto captureDTo)
+        public async Task<dynamic> CaptureTransactionAsync(CaptureRequestDto captureDto)
         {
-            return await PostAsync(captureDTo, CaptureTransactionURL);
+            return await PostAsync(captureDto, CaptureTransactionURL);
+        }
+        public async Task<dynamic> VoidTransactionAsync(VoidRequestDto voidDto)
+        {
+            return await PostAsync(voidDto, VoidTransactionURL);
         }
 
         public async Task<string> PostAsync(object data, string url)

@@ -29,15 +29,9 @@ namespace POC_PayMob {
    
             // Register IHttpContextAccessor
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
+            builder.Services.Configure<PaymobOptions>(builder.Configuration.GetSection(PaymobOptions.Paymob));
             var app = builder.Build();
-            // Use session middleware
-            app.UseSession();
+            
             // Use CORS middleware
             app.UseCors("AllowSpecificOrigin");
             app.Use(async (context, next) =>

@@ -29,16 +29,17 @@ namespace POC_PayMob.API {
         public IActionResult PaymentCallback([FromBody] object response)
         {
             // Handle the payment response
-            PayMobResponseDto createdOrder = JsonConvert.DeserializeObject<PayMobResponseDto>(response.ToString());
+            PaymentResponseDto createdOrder = JsonConvert.DeserializeObject<PaymentResponseDto>(response.ToString());
             var extraData = createdOrder.Obj.PaymentKeyClaims.Extra;
 
             return StatusCode(200, new { Message = "PaymentAuthorizedSuccessfully" });
         }
 
-        [HttpGet("capture-transaction")]
-        public async Task<dynamic> CaptureTransaction([FromQuery] CaptureRequestDto captureDTo)
+        [HttpPost("capture-transaction")]
+        public async Task<dynamic> CaptureTransaction([FromBody] CaptureRequestDto captureDto)
         {
-            return await _paymobService.CaptureTransactionAsync(captureDTo);
+            return await _paymobService.CaptureTransactionAsync(captureDto);
         }
+
     }
 }

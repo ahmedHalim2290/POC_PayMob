@@ -5,10 +5,19 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using POC_PayMob.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 namespace POC_PayMob.Filters {
 
     public class HmacValidationFilter : IAsyncActionFilter {
-        private const string HMACSecret = "30CFE25CACBED121ABC1D64D0972BD91"; // Replace with your actual hmac key
+       
+        private readonly PaymobOptions _options;
+        private string HMACSecret;
+       public HmacValidationFilter(IOptions<PaymobOptions> options) 
+        {
+            _options = options.Value;
+           
+            HMACSecret = _options.HMACSecret;
+        }
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
                 var currentRequest = context.HttpContext.Request;
@@ -27,7 +36,7 @@ namespace POC_PayMob.Filters {
                 // Step 4: Compare the computed HMAC with the received HMAC
                 if (!string.Equals(computedHmac, receivedHmac, StringComparison.OrdinalIgnoreCase))
                 {
-                       context.Result = new Microsoft.AspNetCore.Mvc.UnauthorizedResult();
+                       context.Result = new UnauthorizedResult();
                        return;
                 }
                 // HMAC validation successful, proceed to the action
@@ -39,7 +48,7 @@ namespace POC_PayMob.Filters {
         private string ComputeHmac(string secret, string requestBody)
         {
                 // Step 1: Deserialize the request body
-                PayMobResponseDto payMobData = JsonConvert.DeserializeObject<PayMobResponseDto>(requestBody);
+                PaymentResponseDto payMobData = JsonConvert.DeserializeObject<PaymentResponseDto>(requestBody);
 
                 // Step 2: Prepare the data for HMAC calculation
                 var data = new Dictionary<string, string>
@@ -84,7 +93,7 @@ namespace POC_PayMob.Filters {
                 }
            
         }
-        private async Task<string> ReadRequestBodyAsync(Microsoft.AspNetCore.Http.HttpRequest request)
+        private async Task<string> ReadRequestBodyAsync(HttpRequest request)
         {
            
             request.EnableBuffering(); // Enable rewinding the request body stream

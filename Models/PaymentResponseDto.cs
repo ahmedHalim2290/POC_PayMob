@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
 
-    public class PayMobResponseDto {
+    public class PaymentResponseDto {
         [JsonProperty("type")]
         public string Type { get; set; }
 
         [JsonProperty("obj")]
-        public Response_Transaction Obj { get; set; }
+        public TransactionResponseDto Obj { get; set; }
 
         [JsonProperty("accept_fees")]
         public int AcceptFees { get; set; }
@@ -20,7 +20,7 @@
         public string TransactionProcessedCallbackResponses { get; set; }
     }
 
-    public class Response_Transaction {
+    public class TransactionResponseDto {
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -61,7 +61,7 @@
         public bool HasParentTransaction { get; set; }
 
         [JsonProperty("order")]
-        public Response_OrderDTO Order { get; set; }
+        public OrderResponseDto Order { get; set; }
 
         [JsonProperty("created_at")]
         public string CreatedAt { get; set; }
@@ -73,7 +73,7 @@
         public string Currency { get; set; }
 
         [JsonProperty("source_data")]
-        public Response_SourceData SourceData { get; set; }
+        public SourceDataResponseDto SourceData { get; set; }
 
         [JsonProperty("api_source")]
         public string ApiSource { get; set; }
@@ -97,13 +97,13 @@
         public bool IsRefund { get; set; }
 
         [JsonProperty("data")]
-        public Response_Data Data { get; set; }
+        public DataResponseDto Data { get; set; }
 
         [JsonProperty("is_hidden")]
         public bool IsHidden { get; set; }
 
         [JsonProperty("payment_key_claims")]
-        public Response_PaymentKeyClaims PaymentKeyClaims { get; set; }
+        public PaymentKeyClaimsResponseDto PaymentKeyClaims { get; set; }
 
         [JsonProperty("error_occured")]
         public bool ErrorOccured { get; set; }
@@ -148,7 +148,7 @@
         public object ParentTransaction { get; set; }
     }
 
-    public class Response_OrderDTO {
+    public class OrderResponseDto {
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -159,7 +159,7 @@
         public bool DeliveryNeeded { get; set; }
 
         [JsonProperty("merchant")]
-        public Response_Merchant Merchant { get; set; }
+        public MerchantResponseDto Merchant { get; set; }
 
         [JsonProperty("collector")]
         public object Collector { get; set; }
@@ -168,7 +168,7 @@
         public int AmountCents { get; set; }
 
         [JsonProperty("shipping_data")]
-        public Response_ShippingData ShippingData { get; set; }
+        public ShippingDataResponseDto ShippingData { get; set; }
 
         [JsonProperty("currency")]
         public string Currency { get; set; }
@@ -228,7 +228,7 @@
         public Dictionary<string, object> Data { get; set; }
     }
 
-    public class Response_Merchant {
+    public class MerchantResponseDto {
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -260,7 +260,7 @@
         public string Street { get; set; }
     }
 
-    public class Response_ShippingData {
+    public class ShippingDataResponseDto {
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -313,7 +313,7 @@
         public int Order { get; set; }
     }
 
-    public class Response_SourceData {
+    public class SourceDataResponseDto {
         [JsonProperty("pan")]
         public string Pan { get; set; }
 
@@ -327,7 +327,7 @@
         public string SubType { get; set; }
     }
 
-    public class Response_Data {
+    public class DataResponseDto {
         [JsonProperty("gateway_integration_pk")]
         public int GatewayIntegrationPk { get; set; }
 
@@ -344,7 +344,7 @@
         public string Currency { get; set; }
 
         [JsonProperty("migs_order")]
-        public Response_MigsOrder MigsOrder { get; set; }
+        public MigsOrderResponseDto MigsOrder { get; set; }
 
         [JsonProperty("merchant")]
         public string Merchant { get; set; }
@@ -353,7 +353,7 @@
         public string MigsResult { get; set; }
 
         [JsonProperty("migs_transaction")]
-        public Response_MigsTransaction MigsTransaction { get; set; }
+        public MigsTransactionResponseDto MigsTransaction { get; set; }
 
         [JsonProperty("txn_response_code")]
         public string TxnResponseCode { get; set; }
@@ -410,7 +410,7 @@
         public string AcsEci { get; set; }
     }
 
-    public class Response_MigsOrder {
+    public class MigsOrderResponseDto {
         [JsonProperty("acceptPartialAmount")]
         public bool AcceptPartialAmount { get; set; }
 
@@ -421,7 +421,7 @@
         public string AuthenticationStatus { get; set; }
 
         [JsonProperty("chargeback")]
-        public Response_Chargeback Chargeback { get; set; }
+        public ChargebackResponseDto Chargeback { get; set; }
 
         [JsonProperty("creationTime")]
         public string? CreationTime { get; set; }
@@ -460,7 +460,7 @@
         public double TotalRefundedAmount { get; set; }
     }
 
-    public class Response_Chargeback {
+    public class ChargebackResponseDto {
         [JsonProperty("amount")]
         public int Amount { get; set; }
 
@@ -468,9 +468,9 @@
         public string Currency { get; set; }
     }
 
-    public class Response_MigsTransaction {
+    public class MigsTransactionResponseDto {
         [JsonProperty("acquirer")]
-        public Response_Acquirer Acquirer { get; set; }
+        public AcquirerResponseDto Acquirer { get; set; }
 
         [JsonProperty("amount")]
         public double Amount { get; set; }
@@ -503,7 +503,7 @@
         public string Type { get; set; }
     }
 
-    public class Response_Acquirer {
+    public class AcquirerResponseDto {
         [JsonProperty("batch")]
         public int Batch { get; set; }
 
@@ -526,7 +526,7 @@
         public string TransactionId { get; set; }
     }
 
-    public class Response_PaymentKeyClaims {
+    public class PaymentKeyClaimsResponseDto {
         [JsonProperty("exp")]
         public int Exp { get; set; }
 
@@ -549,7 +549,7 @@
         public int AmountCents { get; set; }
 
         [JsonProperty("billing_data")]
-        public Response_BillingData BillingData { get; set; }
+        public BillingDataResponseDto BillingData { get; set; }
 
         [JsonProperty("integration_id")]
         public int IntegrationId { get; set; }
@@ -561,7 +561,7 @@
         public bool SinglePaymentAttempt { get; set; }
     }
 
-    public class Response_BillingData {
+    public class BillingDataResponseDto {
         [JsonProperty("city")]
         public string City { get; set; }
 

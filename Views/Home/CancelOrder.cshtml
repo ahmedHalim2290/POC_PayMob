@@ -1,8 +1,13 @@
-﻿@model POC_PayMob.Models.TransactionResponseDto
+﻿
+@{
+    ViewData["Title"] = "CancelOrder";
+}
+
+@model POC_PayMob.Models.TransactionResponseDto
 <div class="text-center">
     <h1 class="display-4">PayMob</h1>
     <div class="container">
-        <h1>Thanks .... Your order has been Approved.</h1>
+        <h1>Thanks ... Your order has been Canceled.</h1>
         <br />
         <h4>Order Details: </h4>
         <table class="table table-bordered">
@@ -16,8 +21,8 @@
                 <td>@Model.AmountCents</td>
             </tr>
             <tr>
-                <th>Success</th>
-                <td>@Model.Success</td>
+                <th>Void</th>
+                <td>@Model.IsVoid</td>
             </tr>
 
 
