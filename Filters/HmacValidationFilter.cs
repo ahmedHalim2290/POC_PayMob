@@ -11,12 +11,10 @@ namespace POC_PayMob.Filters {
     public class HmacValidationFilter : IAsyncActionFilter {
        
         private readonly PaymobOptions _options;
-        private string HMACSecret;
+       
        public HmacValidationFilter(IOptions<PaymobOptions> options) 
         {
-            _options = options.Value;
-           
-            HMACSecret = _options.HMACSecret;
+            _options = options.Value; 
         }
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
@@ -31,7 +29,7 @@ namespace POC_PayMob.Filters {
                     throw new Exception("HMAC not found in the request body.");
                 }
                 // Step 3: Compute the HMAC using the secret key and request body
-                var computedHmac = ComputeHmac(HMACSecret, requestBody);
+                var computedHmac = ComputeHmac(_options.HMACSecret, requestBody);
 
                 // Step 4: Compare the computed HMAC with the received HMAC
                 if (!string.Equals(computedHmac, receivedHmac, StringComparison.OrdinalIgnoreCase))

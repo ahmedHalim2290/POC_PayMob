@@ -51,13 +51,13 @@ namespace POC_PayMob.Controllers {
             };
 
 
-            var clientSecret = await _paymobService.GetClientSecretAsync(order);
+            var clientSecret = await _paymobService.GetClientSecretAsync(order,true);
             var model = new { clientSecret = clientSecret };
             return View(model);
 
         }
 
-        public async Task<IActionResult> CaptureOrder([FromQuery] CaptureRequestDto captureDTo)
+        public async Task<IActionResult> ConfirmOrder([FromQuery] ProcessRequestDto captureDTo)
         {
              var data = await _paymobService.CaptureTransactionAsync(captureDTo);
             TransactionResponseDto model = new TransactionResponseDto();
@@ -72,10 +72,40 @@ namespace POC_PayMob.Controllers {
             return View(model);
         }
 
+        public async Task<IActionResult> RefundOrder([FromQuery] ProcessRequestDto refundDto)
+        {
+            var data = await _paymobService.RefundTransactionAsync(refundDto);
+            TransactionResponseDto model = new TransactionResponseDto();
+            model = JsonConvert.DeserializeObject<TransactionResponseDto>(data.ToString());
+            return View(model);
+        }
+        public async Task<IActionResult> GetTransactionById(int TransactionId)
+        {
+            var data = await _paymobService.GetTransactionByTrxIdAsync(TransactionId);
+            TransactionResponseDto model = new TransactionResponseDto();
+            model = JsonConvert.DeserializeObject<TransactionResponseDto>(data.ToString());
+            return View("Transaction", model);
+        }
+        public async Task<IActionResult> TransactionByOrderId(int orderId)
+        {
+            var data = await _paymobService.GetTransactionByOrderIdAsync(orderId);
+            TransactionResponseDto model = new TransactionResponseDto();
+            model = JsonConvert.DeserializeObject<TransactionResponseDto>(data.ToString());
+            return View("Transaction", model);
+        }
+        public async Task<IActionResult> TransactionByMerchantOrderId(string MerchantOrderId)
+        {
+            var data = await _paymobService.GetTransactionByMerchantOrderIdAsync(MerchantOrderId);
+            TransactionResponseDto model = new TransactionResponseDto();
+            model = JsonConvert.DeserializeObject<TransactionResponseDto>(data.ToString());
+            return View("Transaction", model);
+        }
 
-        public async Task<IActionResult> ConfirmOrder()
+
+        public async Task<IActionResult> RedirectOrder()
         {
             var request = HttpContext.Request;
+
             var result = new RedirectionPaymentResponseDto
             {
                 Id = request.Query["id"].ToString(),
@@ -92,7 +122,7 @@ namespace POC_PayMob.Controllers {
                 ProfileId = request.Query["profile_id"].ToString(),
                 HasParentTransaction = request.Query["has_parent_transaction"].ToString(),
                 Order = request.Query["order"].ToString(),
-                //    CreatedAt = DateTime.Parse(request.Query["created_at"].ToString()),
+               CreatedAt = DateTime.Parse(request.Query["created_at"].ToString()),
                 Currency = request.Query["currency"].ToString(),
                 MerchantCommission = request.Query["merchant_commission"].ToString(),
                 DiscountDetails = request.Query["discount_details"].ToString(),
@@ -101,7 +131,7 @@ namespace POC_PayMob.Controllers {
                 ErrorOccured = request.Query["error_occured"].ToString(),
                 RefundedAmountCents = request.Query["refunded_amount_cents"].ToString(),
                 CapturedAmount = request.Query["captured_amount"].ToString(),
-                //      UpdatedAt = DateTime.Parse(request.Query["updated_at"].ToString()),
+                UpdatedAt = DateTime.Parse(request.Query["updated_at"].ToString()),
                 IsSettled = request.Query["is_settled"].ToString(),
                 BillBalanced = request.Query["bill_balanced"].ToString(),
                 IsBill = request.Query["is_bill"].ToString(),

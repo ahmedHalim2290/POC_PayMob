@@ -67,13 +67,9 @@ namespace POC_PayMob.Models {
     }
 
     public class OrderRequestDto {
-      
-        private static readonly int AuthPaymentMethodIntegrationID = 4937477;
-     //   private static readonly int AuthPaymentMethodNum = 12;
-        private static readonly string AuthPaymentMethodType = "card";
 
         [JsonProperty("payment_methods")]
-        public object[] PaymentMethods => new object[] { AuthPaymentMethodType, AuthPaymentMethodIntegrationID };
+        public object[] PaymentMethods { get; set; }
      //   [JsonProperty("special_reference")]
       //  public string SpecialReference {  get; set; }
         [JsonProperty("amount")]

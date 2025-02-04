@@ -7,6 +7,10 @@
     <h1 class="display-4">PayMob</h1>
     <p>
         To check out using on-line payment please
-        <a href="https://accept.paymob.com/unifiedcheckout/?publicKey=egy_pk_test_FJbzCA7nEOVjH01byl4vlxRr8ksAABUp&clientSecret=@Model.clientSecret">Click Here</a>.
+        <a href="https://accept.paymob.com/unifiedcheckout/?publicKey=egy_pk_test_ylSflwH1T85AcS3y8ai9KAXx8XdJp6RO&clientSecret=@Model.clientSecret">Click Here</a>.
+        
+        <a href="@Url.Action("GetTransactionById", "Home", new { TransactionId = 261326184})">Test Get Transaction by transxId</a>
+        <a href="@Url.Action("TransactionByOrderId", "Home", new { orderId = 292913213})">Test Get Transaction by orderId</a>
+        <a href="@Url.Action("TransactionByMerchantOrderId", "Home", new { MerchantOrderId = "orderId_55"})">Test Get Transaction by merchandOrderId</a>
     </p>
 </div>
